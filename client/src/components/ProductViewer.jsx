@@ -73,11 +73,11 @@ export default class ProductViewer extends React.Component {
   }
 
   render(){
-    if (this.props.searchProducts.length > 0) {
+    if (this.props.searchProducts.length > 0 && this.props.searchState) {
       return (
         <div className = 'product-viewer'>
           {this.props.searchProducts.map((item, index) => (
-          <div key={index}>
+          <div key={index} >
             <h3>{item.item}</h3>
             <img src={item.image}></img>
             <div> Current bid: ${item.curr_bid} </div>

@@ -12,19 +12,28 @@ export default class App extends React.Component {
       viewForm: 0,
       viewProduct: {},
       search: '',
-      searchProducts: []
+      searchProducts: [],
+      searchState: false,
     }
     this.getAllProducts = this.getAllProducts.bind(this);
     this.onClickChangeForm = this.onClickChangeForm.bind(this);
     this.updateViewProductBid = this.updateViewProductBid.bind(this);
     this.onChangeSearch = this.onChangeSearch.bind(this);
     this.onClickSearch = this.onClickSearch.bind(this);
+    this.renderedSearch = this.renderedSearch.bind(this);
+  }
+
+  renderedSearch() {
+    this.setState({
+      searchState: !this.state.searchState
+    })
   }
 
   onClickSearch() {
     var newProd = this.state.productList.filter((items) => items.item.includes(this.state.search))
     this.setState({
-      searchProducts: newProd
+      searchProducts: newProd,
+      searchState: !this.state.searchState
     })
   }
 
@@ -77,10 +86,10 @@ export default class App extends React.Component {
         </nav>
         <div className="row main-container">
           <div className="col-md-7 product-viewer-container">
-          {this.state.productList.length > 0 ? <ProductViewer list={this.state.productList} getAllProducts={this.getAllProducts} viewForm={this.state.viewForm} viewProduct={this.state.viewProduct} updateViewProductBid={this.updateViewProductBid} searchProducts={this.state.searchProducts}/> : null}
+          {this.state.productList.length > 0 ? <ProductViewer list={this.state.productList} getAllProducts={this.getAllProducts} viewForm={this.state.viewForm} viewProduct={this.state.viewProduct} updateViewProductBid={this.updateViewProductBid} searchProducts={this.state.searchProducts} searchState={this.state.searchState} /> : null}
           </div>
           <div className="col-md-5 product-list-container">
-            <ProductList list={this.state.productList} viewProduct={this.state.viewProduct} changeForm={this.onClickChangeForm}/>
+            <ProductList list={this.state.productList} viewProduct={this.state.viewProduct} changeForm={this.onClickChangeForm} renderedSearch={this.renderedSearch} />
           </div>
         </div>
       </div>
