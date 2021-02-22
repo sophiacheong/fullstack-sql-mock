@@ -2,7 +2,9 @@ import React from 'react';
 
 const Products = (props) => {
    return(
-    <div className='product-list-entry'>
+    <div className='product-list-entry' onClick={() => {
+      props.changeForm(props.item)
+    }}>
       <img src={props.item.image}></img>
       <h4>{props.item.item}</h4>
       Min Cost: ${props.item.min_cost}

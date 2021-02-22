@@ -8,9 +8,28 @@ export default class App extends React.Component {
   constructor(props){
     super(props);
     this.state = {
-      productList: []
+      productList: [],
+      viewForm: 0,
+      viewProduct: {}
     }
     this.getAllProducts = this.getAllProducts.bind(this);
+    this.onClickChangeForm = this.onClickChangeForm.bind(this);
+    this.updateViewProductBid = this.updateViewProductBid.bind(this);
+  }
+
+  updateViewProductBid(input) {
+    var obj = this.state.viewProduct;
+    obj.curr_bid = input
+    this.setState({
+      viewProduct: obj
+    }, () => {console.log('new Bid:', this.state.viewProduct)})
+  }
+
+  onClickChangeForm(input) {
+    this.setState({
+      viewProduct: input,
+      viewForm: this.state.viewForm + 1
+    })
   }
 
   componentDidMount() {
@@ -41,10 +60,10 @@ export default class App extends React.Component {
         </nav>
         <div className="row main-container">
           <div className="col-md-7 product-viewer-container">
-          {this.state.productList.length > 0 ? <ProductViewer list={this.state.productList} getAllProducts={this.getAllProducts}/> : null}
+          {this.state.productList.length > 0 ? <ProductViewer list={this.state.productList} getAllProducts={this.getAllProducts} viewForm={this.state.viewForm} viewProduct={this.state.viewProduct} updateViewProductBid={this.updateViewProductBid} /> : null}
           </div>
           <div className="col-md-5 product-list-container">
-            <ProductList list={this.state.productList} />
+            <ProductList list={this.state.productList} viewProduct={this.state.viewProduct} changeForm={this.onClickChangeForm}/>
           </div>
         </div>
       </div>

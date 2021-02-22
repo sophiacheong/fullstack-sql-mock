@@ -12,12 +12,31 @@ export default class ProductViewer extends React.Component {
     this.generateRandomItem = this.generateRandomItem.bind(this);
     this.onChangeBid = this.onChangeBid.bind(this);
     this.onClickBid = this.onClickBid.bind(this);
+    this.onUpdateClickBid = this.onUpdateClickBid.bind(this);
   }
 
   onChangeBid(e) {
     this.setState({
       newBid: e.target.value
     })
+  }
+
+  onUpdateClickBid(id) {
+    if (Number(this.state.newBid) > Number(this.props.viewProduct.curr_bid)) {
+      axios.patch(`/name/products/${id}`, {
+        curr_bid: this.state.newBid
+      })
+        .then(() => {
+          axios.get('/name/products')
+            .then((results) => {
+              var inp = results.data.filter(item => item.id === this.props.viewProduct.id)
+              this.props.updateViewProductBid(inp[0].curr_bid)
+            })
+        })
+        .catch((err) => {console.error(err)})
+    } else {
+      alert('Bid not valid')
+    }
   }
 
   onClickBid(id) {
@@ -54,18 +73,34 @@ export default class ProductViewer extends React.Component {
   }
 
   render(){
-    return(
-      <div className = 'product-viewer'>
-        <h3>{this.state.product.item}</h3>
-        <img src={this.state.product.image}></img>
-        <div> Current bid: ${this.state.product.curr_bid} </div>
-        <div> Min cost: ${this.state.product.min_cost} </div>
-        <div> Ends in: {this.state.product.ends_in} days </div>
-        <div>
-          New Bid: <input placeholder="Amount here" onChange={this.onChangeBid} />
-          <button onClick={() => {this.onClickBid(this.state.product.id)}}>Submit</button>
+    if (this.props.viewForm > 0) {
+      return (
+        <div className = 'product-viewer'>
+          <h3>{this.props.viewProduct.item}</h3>
+          <img src={this.props.viewProduct.image}></img>
+          <div> Current bid: ${this.props.viewProduct.curr_bid} </div>
+          <div> Min cost: ${this.props.viewProduct.min_cost} </div>
+          <div> Ends in: {this.props.viewProduct.ends_in} days </div>
+          <div>
+            New Bid: <input placeholder="Amount here" onChange={this.onChangeBid} />
+            <button onClick={() => {this.onUpdateClickBid(this.props.viewProduct.id)}}>Submit</button>
+          </div>
         </div>
-      </div>
-    )
+      )
+    } else {
+      return(
+        <div className = 'product-viewer'>
+          <h3>{this.state.product.item}</h3>
+          <img src={this.state.product.image}></img>
+          <div> Current bid: ${this.state.product.curr_bid} </div>
+          <div> Min cost: ${this.state.product.min_cost} </div>
+          <div> Ends in: {this.state.product.ends_in} days </div>
+          <div>
+            New Bid: <input placeholder="Amount here" onChange={this.onChangeBid} />
+            <button onClick={() => {this.onClickBid(this.state.product.id)}}>Submit</button>
+          </div>
+        </div>
+      )
+    }
   }
 }
