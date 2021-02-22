@@ -1,1 +1,15 @@
+DROP DATABASE IF EXISTS eBay;
 
+CREATE DATABASE eBay;
+
+USE eBay;
+
+CREATE TABLE products (
+  id INT NOT NULL AUTO_INCREMENT,
+  item VARCHAR(250),
+  min_cost DECIMAL (65, 2),
+  curr_bid DECIMAL (65, 2),
+  ends_in INT NOT NULL,
+  image VARCHAR(250),
+  PRIMARY KEY(id)
+);
