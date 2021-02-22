@@ -4,8 +4,8 @@
   "description": "a repo to practice working with a full stack application using a sql database",
   "main": "./server/index.js",
   "scripts": {
-    "build": "webpack -w",
-    "start": "nodemon"
+    "build": "webpack -d --w",
+    "start": "nodemon server/index.js"
   },
   "repository": "https://github.com/atk1213/fullstack-rev-sql.git",
   "license": "MIT",
@@ -16,6 +16,8 @@
     "cors": "^2.8.5",
     "express": "^4.16.4",
     "morgan": "^1.9.1",
+    "mysql": "^2.18.1",
+    "mysql2": "^2.2.5",
     "nodemon": "^1.18.10",
     "react": "^16.8.4",
     "react-dom": "^16.8.4"
