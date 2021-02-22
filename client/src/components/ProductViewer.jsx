@@ -7,7 +7,7 @@ export default class ProductViewer extends React.Component {
     this.state = {
       product: {},
       newBid: 0,
-      id: 0
+      id: 0,
     }
     this.generateRandomItem = this.generateRandomItem.bind(this);
     this.onChangeBid = this.onChangeBid.bind(this);
@@ -73,6 +73,25 @@ export default class ProductViewer extends React.Component {
   }
 
   render(){
+    if (this.props.searchProducts.length > 0) {
+      return (
+        <div className = 'product-viewer'>
+          {this.props.searchProducts.map((item, index) => (
+          <div key={index}>
+            <h3>{item.item}</h3>
+            <img src={item.image}></img>
+            <div> Current bid: ${item.curr_bid} </div>
+            <div> Min cost: ${item.min_cost} </div>
+            <div> Ends in: {item.ends_in} days </div>
+            <div>
+              New Bid: <input placeholder="Amount here" onChange={this.onChangeBid} />
+              <button onClick={() => {this.onUpdateClickBid(this.props.searchProducts.id)}}>Submit</button>
+            </div>
+          </div>
+          ))}
+        </div>
+      )
+    }
     if (this.props.viewForm > 0) {
       return (
         <div className = 'product-viewer'>
