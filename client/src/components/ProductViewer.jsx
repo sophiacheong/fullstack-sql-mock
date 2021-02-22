@@ -13,6 +13,25 @@ export default class ProductViewer extends React.Component {
     this.onChangeBid = this.onChangeBid.bind(this);
     this.onClickBid = this.onClickBid.bind(this);
     this.onUpdateClickBid = this.onUpdateClickBid.bind(this);
+    this.onUpdateClickBidB = this.onUpdateClickBidB.bind(this);
+  }
+
+  onUpdateClickBidB(currentProp, propIndex) {
+    if (Number(this.state.newBid) > Number(currentProp.curr_bid)) {
+      axios.patch(`/name/products/${currentProp.id}`, {
+        curr_bid: this.state.newBid
+      })
+        .then(() => {
+          axios.get('/name/products')
+            .then((results) => {
+              var inp = results.data.filter(item => item.id === currentProp.id);
+              this.props.changeProducts(propIndex, inp[0]);
+            })
+        })
+        .catch((err) => {console.error(err)})
+    } else {
+      alert('Bid not valid')
+    }
   }
 
   onChangeBid(e) {
@@ -85,7 +104,7 @@ export default class ProductViewer extends React.Component {
             <div> Ends in: {item.ends_in} days </div>
             <div>
               New Bid: <input placeholder="Amount here" onChange={this.onChangeBid} />
-              <button onClick={() => {this.onUpdateClickBid(this.props.searchProducts.id)}}>Submit</button>
+              <button onClick={() => {this.onUpdateClickBidB(item, index)}}>Submit</button>
             </div>
           </div>
           ))}

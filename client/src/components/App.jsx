@@ -21,6 +21,17 @@ export default class App extends React.Component {
     this.onChangeSearch = this.onChangeSearch.bind(this);
     this.onClickSearch = this.onClickSearch.bind(this);
     this.renderedSearch = this.renderedSearch.bind(this);
+    this.changeSearchProducts = this.changeSearchProducts.bind(this);
+  }
+
+  changeSearchProducts(id, updateBid) {
+    var partOne = this.state.searchProducts.splice(0, id)
+    partOne.push(updateBid);
+    var partTwo = this.state.searchProducts.splice(1);
+    var both = partOne.concat(partTwo);
+    this.setState({
+      searchProducts: both
+    })
   }
 
   renderedSearch() {
@@ -67,7 +78,7 @@ export default class App extends React.Component {
       .then((results) => {
         this.setState({
           productList: results.data
-        }, () => {console.log(this.state.productList)})
+        })
       })
       .catch((err) => {console.error(err)})
   }
@@ -86,10 +97,10 @@ export default class App extends React.Component {
         </nav>
         <div className="row main-container">
           <div className="col-md-7 product-viewer-container">
-          {this.state.productList.length > 0 ? <ProductViewer list={this.state.productList} getAllProducts={this.getAllProducts} viewForm={this.state.viewForm} viewProduct={this.state.viewProduct} updateViewProductBid={this.updateViewProductBid} searchProducts={this.state.searchProducts} searchState={this.state.searchState} /> : null}
+          {this.state.productList.length > 0 ? <ProductViewer list={this.state.productList} getAllProducts={this.getAllProducts} viewForm={this.state.viewForm} viewProduct={this.state.viewProduct} updateViewProductBid={this.updateViewProductBid} searchProducts={this.state.searchProducts} searchState={this.state.searchState} searchProducts={this.state.searchProducts} changeProducts={this.changeSearchProducts}/> : null}
           </div>
           <div className="col-md-5 product-list-container">
-            <ProductList list={this.state.productList} viewProduct={this.state.viewProduct} changeForm={this.onClickChangeForm} renderedSearch={this.renderedSearch} />
+            <ProductList list={this.state.productList} viewProduct={this.state.viewProduct} changeForm={this.onClickChangeForm} renderedSearch={this.renderedSearch} searchState={this.state.searchState} />
           </div>
         </div>
       </div>

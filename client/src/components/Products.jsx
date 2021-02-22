@@ -4,7 +4,9 @@ const Products = (props) => {
    return(
     <div className='product-list-entry' onClick={() => {
       props.changeForm(props.item);
-      props.renderedSearch();
+      if (props.searchState) {
+        props.renderedSearch();
+      }
     }}>
       <img src={props.item.image}></img>
       <h4>{props.item.item}</h4>
