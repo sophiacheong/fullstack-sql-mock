@@ -21,7 +21,7 @@ const controller = {
   put: (req, res) => {
     dbHelpers.updateProductHelper(req, (err) => {
       if (err) res.status(404).send(err)
-      else res.status(200).send();
+      else res.status(200).send('Success!');
     })
   },
   delete: (req, res) => {

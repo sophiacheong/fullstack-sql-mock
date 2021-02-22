@@ -13,7 +13,7 @@ const dbHelpers = {
     })
   },
   updateProductHelper: (req, callback) => {
-    db.query(`UPDATE products SET item='${req.body.item}' WHERE id=${req.params.id}`, (err) => {
+    db.query(`UPDATE products SET curr_bid=${req.body.curr_bid} WHERE id=${req.params.id}`, (err) => {
       callback(err);
     })
   },

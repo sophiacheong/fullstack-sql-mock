@@ -22,7 +22,7 @@ export default class App extends React.Component {
       .then((results) => {
         this.setState({
           productList: results.data
-        })
+        }, () => {console.log(this.state.productList)})
       })
       .catch((err) => {console.error(err)})
   }
@@ -41,7 +41,7 @@ export default class App extends React.Component {
         </nav>
         <div className="row main-container">
           <div className="col-md-7 product-viewer-container">
-          {this.state.productList.length > 0 ? <ProductViewer list={this.state.productList} /> : null}
+          {this.state.productList.length > 0 ? <ProductViewer list={this.state.productList} getAllProducts={this.getAllProducts}/> : null}
           </div>
           <div className="col-md-5 product-list-container">
             <ProductList list={this.state.productList} />

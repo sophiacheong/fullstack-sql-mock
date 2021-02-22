@@ -9,8 +9,8 @@ router
   .post(controller.post)
 
 router
-  .route('/products/:_id')
-  .put(controller.put)
+  .route('/products/:id')
+  .patch(controller.put)
   .delete(controller.delete)
 
 module.exports = router
