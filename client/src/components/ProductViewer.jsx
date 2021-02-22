@@ -7,7 +7,7 @@ export default class ProductViewer extends React.Component {
 
     }
   }
-  
+
   render(){
     return(
       <div className = 'product-viewer'>
